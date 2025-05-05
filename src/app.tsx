@@ -1,9 +1,5 @@
-import { TitleBar } from "@/components/title-bar";
+import { Layout } from "@/components/layout";
 
 export default function App() {
-  return (
-    <>
-      <TitleBar />
-    </>
-  );
+  return <Layout></Layout>;
 }
