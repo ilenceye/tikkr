@@ -3,7 +3,7 @@ import { Clock3Icon, XIcon } from "lucide-react";
 
 export function TitleBar() {
   return (
-    <div data-tauri-drag-region className="bg-secondary relative px-4 py-2">
+    <div data-tauri-drag-region className="bg-secondary sticky top-0 px-4 py-2">
       <div className="flex items-center gap-1">
         <Clock3Icon className="size-4" />
         <span className="text-sm font-medium">Tikkr</span>
