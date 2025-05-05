@@ -15,7 +15,8 @@
         "title": "tikkr",
         "width": 420,
         "height": 420,
-        "skipTaskbar": true
+        "skipTaskbar": true,
+        "decorations": false
       }
     ],
     "security": {
