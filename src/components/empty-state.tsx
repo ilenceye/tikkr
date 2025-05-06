@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Plus, Timer } from "lucide-react";
 
-export function EmptyState() {
+export function EmptyState({ action }: { action?: () => void }) {
   return (
     <div className="flex h-full flex-col items-center justify-center text-center">
       <div className="mb-4 rounded-full bg-gray-100 p-4">
@@ -11,7 +11,7 @@ export function EmptyState() {
       <p className="mb-4 max-w-xs text-sm text-gray-500">
         添加一些常用的计时器，以便快速开始倒计时
       </p>
-      <Button className="flex items-center gap-1">
+      <Button className="flex items-center gap-1" onClick={action}>
         <Plus className="h-4 w-4" /> 添加计时器
       </Button>
     </div>
