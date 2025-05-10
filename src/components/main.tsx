@@ -3,7 +3,13 @@ import { useState } from "react";
 import { TimerList } from "@/components/timer-list";
 import { TimerProps } from "@/types";
 
-export function Main({ timers }: { timers: TimerProps[] }) {
+export function Main({
+  timers,
+  onTimerDelete,
+}: {
+  timers: TimerProps[];
+  onTimerDelete: (id: string) => void;
+}) {
   const [activeTimerIdx, setActiveTimerIdx] = useState(0);
 
   return (
@@ -15,6 +21,7 @@ export function Main({ timers }: { timers: TimerProps[] }) {
         timers={timers}
         activeTimerIdx={activeTimerIdx}
         onActiveTimerIdxChange={setActiveTimerIdx}
+        onTimerDelete={onTimerDelete}
       />
     </div>
   );

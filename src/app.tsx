@@ -10,12 +10,12 @@ type View = "main" | "create-timer";
 
 export default function App() {
   const [view, setView] = useState<View>("main");
-  const { timers, addTimer } = useTimers();
+  const { timers, addTimer, deleteTimer } = useTimers();
 
   return (
     <Layout>
       {view === "main" && timers.length > 0 ? (
-        <Main timers={timers} />
+        <Main timers={timers} onTimerDelete={deleteTimer} />
       ) : (
         <div className="flex h-full items-center justify-center">
           <EmptyState action={() => setView("create-timer")} />

@@ -9,5 +9,10 @@ export const useTimers = () => {
     setTimers([...timers, newTimer]);
   };
 
-  return { timers, addTimer };
+  const deleteTimer = (id: string) => {
+    const newTimers = timers.filter((t) => t.id !== id);
+    setTimers(newTimers);
+  };
+
+  return { timers, addTimer, deleteTimer };
 };

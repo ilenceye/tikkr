@@ -19,7 +19,7 @@ export function TimerItem({
   return (
     <button
       className={cn(
-        "cursor-pointer rounded-sm border p-2 text-sm transition-all",
+        "w-full cursor-pointer rounded-sm border p-2 text-sm transition-all",
         isActive && "border-gray-300 bg-gray-100 text-gray-900",
       )}
       onClick={onClick}
