@@ -3,17 +3,20 @@ import { useState } from "react";
 import { CreateTimerView } from "@/components/create-timer-view";
 import { EmptyState } from "@/components/empty-state";
 import { Layout } from "@/components/layout";
+import { Main } from "@/components/main";
 import { useTimers } from "@/hooks/use-timers";
 
 type View = "main" | "create-timer";
 
 export default function App() {
   const [view, setView] = useState<View>("main");
-  const { addTimer } = useTimers();
+  const { timers, addTimer } = useTimers();
 
   return (
     <Layout>
-      {view === "main" && (
+      {view === "main" && timers.length > 0 ? (
+        <Main timers={timers} />
+      ) : (
         <div className="flex h-full items-center justify-center">
           <EmptyState action={() => setView("create-timer")} />
         </div>
