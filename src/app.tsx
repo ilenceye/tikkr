@@ -5,18 +5,19 @@ import { useTimerDialog } from "@/components/timer-dialog";
 import { useTimers } from "@/hooks/use-timers";
 
 export default function App() {
-  const { timers, addTimer, deleteTimer } = useTimers();
+  const { timers, addTimer, deleteTimer, updateTimer } = useTimers();
   const { TimerDialog, openTimerDialog } = useTimerDialog();
 
   return (
     <>
-      <TimerDialog onTimerAdd={addTimer} />
+      <TimerDialog onSubmit={addTimer} />
       <Layout>
         {timers.length > 0 ? (
           <Main
             timers={timers}
             onTimerDelete={deleteTimer}
             onTimerAdd={addTimer}
+            onTimerUpdate={updateTimer}
           />
         ) : (
           <div className="flex h-full items-center justify-center">

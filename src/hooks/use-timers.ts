@@ -14,5 +14,10 @@ export const useTimers = () => {
     setTimers(newTimers);
   };
 
-  return { timers, addTimer, deleteTimer };
+  const updateTimer = (timer: TimerProps) => {
+    const newTimers = timers.map((t) => (t.id === timer.id ? timer : t));
+    setTimers(newTimers);
+  };
+
+  return { timers, addTimer, deleteTimer, updateTimer };
 };

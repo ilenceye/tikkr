@@ -10,17 +10,19 @@ export function Main({
   timers,
   onTimerDelete,
   onTimerAdd,
+  onTimerUpdate,
 }: {
   timers: TimerProps[];
   onTimerDelete: (id: string) => void;
   onTimerAdd: (seconds: number) => void;
+  onTimerUpdate: (timer: TimerProps) => void;
 }) {
   const [activeTimerIdx, setActiveTimerIdx] = useState(0);
   const { TimerDialog, openTimerDialog } = useTimerDialog();
 
   return (
     <>
-      <TimerDialog onTimerAdd={onTimerAdd} />
+      <TimerDialog onSubmit={onTimerAdd} />
       <div className="p-6">
         <div className="mb-4 flex items-center justify-between">
           <div className="text-sm font-bold">计时器</div>
@@ -37,6 +39,7 @@ export function Main({
           activeTimerIdx={activeTimerIdx}
           onActiveTimerIdxChange={setActiveTimerIdx}
           onTimerDelete={onTimerDelete}
+          onTimerUpdate={onTimerUpdate}
         />
       </div>
     </>

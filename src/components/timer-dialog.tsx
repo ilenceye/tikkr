@@ -13,32 +13,38 @@ import {
 import { DialogProps } from "@radix-ui/react-dialog";
 
 type TimerDialogProps = Required<Pick<DialogProps, "open" | "onOpenChange">> & {
-  onTimerAdd: (seconds: number) => void;
+  variant?: "add" | "edit";
+  defaultSeconds?: number;
+  onSubmit: (seconds: number) => void;
 };
 
 export function TimerDialog({
   open,
   onOpenChange,
-  onTimerAdd,
+  variant = "add",
+  defaultSeconds = 0,
+  onSubmit,
 }: TimerDialogProps) {
-  const [seconds, setSeconds] = useState(0);
+  const [seconds, setSeconds] = useState(defaultSeconds);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>添加计时器</DialogTitle>
+          <DialogTitle>
+            {variant === "add" ? "添加计时器" : "编辑计时器"}
+          </DialogTitle>
         </DialogHeader>
         <TimePicker seconds={seconds} onSecondsChange={setSeconds} />
         <DialogFooter>
           <DialogClose>取消</DialogClose>
           <Button
             onClick={() => {
-              onTimerAdd(seconds);
+              onSubmit(seconds);
               onOpenChange(false);
             }}
           >
-            添加
+            保存
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -50,8 +56,18 @@ export const useTimerDialog = () => {
   const [open, setOpen] = useState(false);
 
   return {
-    TimerDialog: ({ onTimerAdd }: Pick<TimerDialogProps, "onTimerAdd">) => (
-      <TimerDialog open={open} onOpenChange={setOpen} onTimerAdd={onTimerAdd} />
+    TimerDialog: ({
+      variant,
+      defaultSeconds,
+      onSubmit,
+    }: Pick<TimerDialogProps, "variant" | "defaultSeconds" | "onSubmit">) => (
+      <TimerDialog
+        open={open}
+        onOpenChange={setOpen}
+        variant={variant}
+        defaultSeconds={defaultSeconds}
+        onSubmit={onSubmit}
+      />
     ),
     openTimerDialog: () => setOpen(true),
   };
