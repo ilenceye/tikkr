@@ -14,12 +14,13 @@ export default function App() {
 
   return (
     <Layout>
-      {view === "main" && timers.length > 0 ? (
-        <Main timers={timers} onTimerDelete={deleteTimer} />
-      ) : (
+      {view === "main" && timers.length === 0 && (
         <div className="flex h-full items-center justify-center">
           <EmptyState action={() => setView("create-timer")} />
         </div>
+      )}
+      {view === "main" && timers.length > 0 && (
+        <Main timers={timers} onTimerDelete={deleteTimer} />
       )}
       {view === "create-timer" && (
         <CreateTimerView
