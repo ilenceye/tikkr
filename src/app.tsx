@@ -20,7 +20,11 @@ export default function App() {
         </div>
       )}
       {view === "main" && timers.length > 0 && (
-        <Main timers={timers} onTimerDelete={deleteTimer} />
+        <Main
+          timers={timers}
+          onTimerDelete={deleteTimer}
+          onTimerAdd={addTimer}
+        />
       )}
       {view === "create-timer" && (
         <CreateTimerView
