@@ -1,40 +1,29 @@
-import { useState } from "react";
-
-import { CreateTimerView } from "@/components/create-timer-view";
 import { EmptyState } from "@/components/empty-state";
 import { Layout } from "@/components/layout";
 import { Main } from "@/components/main";
+import { useTimerDialog } from "@/components/timer-dialog";
 import { useTimers } from "@/hooks/use-timers";
 
-type View = "main" | "create-timer";
-
 export default function App() {
-  const [view, setView] = useState<View>("main");
   const { timers, addTimer, deleteTimer } = useTimers();
+  const { TimerDialog, openTimerDialog } = useTimerDialog();
 
   return (
-    <Layout>
-      {view === "main" && timers.length === 0 && (
-        <div className="flex h-full items-center justify-center">
-          <EmptyState action={() => setView("create-timer")} />
-        </div>
-      )}
-      {view === "main" && timers.length > 0 && (
-        <Main
-          timers={timers}
-          onTimerDelete={deleteTimer}
-          onTimerAdd={addTimer}
-        />
-      )}
-      {view === "create-timer" && (
-        <CreateTimerView
-          onCancel={() => setView("main")}
-          onSubmit={(seconds) => {
-            addTimer(seconds);
-            setView("main");
-          }}
-        />
-      )}
-    </Layout>
+    <>
+      <TimerDialog onTimerAdd={addTimer} />
+      <Layout>
+        {timers.length > 0 ? (
+          <Main
+            timers={timers}
+            onTimerDelete={deleteTimer}
+            onTimerAdd={addTimer}
+          />
+        ) : (
+          <div className="flex h-full items-center justify-center">
+            <EmptyState action={openTimerDialog} />
+          </div>
+        )}
+      </Layout>
+    </>
   );
 }
