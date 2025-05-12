@@ -15,9 +15,14 @@ export default function App() {
   const { timers, addTimer, deleteTimer, updateTimer } = useTimers();
   const { TimerDialog, openTimerDialog } = useTimerDialog();
 
+  const handleTimerAdd = (seconds: number) => {
+    addTimer(seconds);
+    setActiveTimerIdx(timers.length);
+  };
+
   return (
     <>
-      <TimerDialog onSubmit={addTimer} />
+      <TimerDialog onSubmit={handleTimerAdd} />
       <Layout>
         {timers.length > 0 ? (
           <div className="p-6">

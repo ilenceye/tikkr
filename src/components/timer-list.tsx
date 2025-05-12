@@ -20,6 +20,14 @@ export function TimerList({
 }) {
   const { TimerDialog, openTimerDialog } = useTimerDialog();
 
+  const handleTimerDelete = (id: string, idx: number) => {
+    onTimerDelete(id);
+
+    if (idx <= activeTimerIdx && activeTimerIdx !== 0) {
+      onActiveTimerIdxChange(activeTimerIdx - 1);
+    }
+  };
+
   return (
     <>
       <div className="grid grid-cols-3 gap-2">
@@ -31,7 +39,7 @@ export function TimerList({
               onSubmit={(seconds) => onTimerUpdate({ ...timer, seconds })}
             />
             <TimerControls
-              onDelete={() => onTimerDelete(timer.id)}
+              onDelete={() => handleTimerDelete(timer.id, idx)}
               onEdit={openTimerDialog}
             >
               <TimerItem
