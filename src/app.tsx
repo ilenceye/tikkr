@@ -1,15 +1,17 @@
-import { useState } from "react";
-
 import { EmptyState } from "@/components/empty-state";
 import { Layout } from "@/components/layout";
 import { useTimerDialog } from "@/components/timer-dialog";
 import { TimerList } from "@/components/timer-list";
 import { Button } from "@/components/ui/button";
+import { useLocalStorage } from "@/hooks/use-local-storage";
 import { useTimers } from "@/hooks/use-timers";
 import { PlusIcon } from "lucide-react";
 
 export default function App() {
-  const [activeTimerIdx, setActiveTimerIdx] = useState(0);
+  const [activeTimerIdx, setActiveTimerIdx] = useLocalStorage(
+    "active-timer-index",
+    0,
+  );
   const { timers, addTimer, deleteTimer, updateTimer } = useTimers();
   const { TimerDialog, openTimerDialog } = useTimerDialog();
 
