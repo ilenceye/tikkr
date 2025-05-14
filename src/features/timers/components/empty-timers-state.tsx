@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Plus, Timer } from "lucide-react";
 
-export function EmptyState({ action }: { action?: () => void }) {
+export function EmptyTimersState({ action }: { action?: () => void }) {
   return (
     <div className="flex h-full flex-col items-center justify-center text-center">
       <div className="mb-4 rounded-full bg-gray-100 p-4">

@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import TimePicker from "@/components/time-picker";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import TimePicker from "@/features/timers/components/time-picker";
 import { DialogProps } from "@radix-ui/react-dialog";
 
 type TimerDialogProps = Required<Pick<DialogProps, "open" | "onOpenChange">> & {
