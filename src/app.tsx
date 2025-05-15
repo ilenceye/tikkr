@@ -20,10 +20,17 @@ export default function App() {
 
   return (
     <Layout>
-      <div className="p-6">
-        <Countdown seconds={secondsLeft} />
-        <TimerList onSecondsChange={setInitialSeconds} />
-        <div className="mt-6">
+      <div className="flex h-full flex-col p-6">
+        {!isRunning && !isEnd ? (
+          <div className="w-full">
+            <TimerList onSecondsChange={setInitialSeconds} />
+          </div>
+        ) : (
+          <div className="flex grow items-center">
+            <Countdown seconds={secondsLeft} />
+          </div>
+        )}
+        <div className="mt-auto">
           {!isRunning && !isEnd ? (
             <Button className="w-full cursor-pointer" onClick={start}>
               <PlayIcon className="mr-2 h-4 w-4" /> 开始
