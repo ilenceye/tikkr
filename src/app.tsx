@@ -12,10 +12,6 @@ export default function App() {
 
   const { isRunning, isEnd, secondsLeft, start, reset } = useCountdown({
     initialSeconds,
-    onFinish: () => {
-      alert("计时结束.");
-      reset();
-    },
   });
 
   return (

@@ -19,6 +19,13 @@ export const useCountdown = ({
   const startMs = useRef<number>(0);
   const endingMs = useRef<number>(0);
 
+  const runCountdownInterval = () => {
+    window.clearInterval(intervalId.current);
+    intervalId.current = window.setInterval(() => {
+      setSecondsLeft((prev) => Math.max(0, prev - 1));
+    }, 1000);
+  };
+
   useEffect(() => {
     setSecondsLeft(initialSeconds);
   }, [initialSeconds]);
@@ -28,22 +35,21 @@ export const useCountdown = ({
     // by reset the time left and restart Interval when the window is focused.
     const handleFocus = () => {
       if (status === "running") {
-        const passedSeconds = Math.round((Date.now() - startMs.current) / 1000); // TODO: 这里用四舍五入总感觉有点问题
-        const newTotalSeconds = initialSeconds - passedSeconds;
-        clearInterval(intervalId.current);
-        setSecondsLeft(newTotalSeconds);
-        intervalId.current = window.setInterval(() => {
-          setSecondsLeft((prev) =>
-            Date.now() >= endingMs.current ? 0 : prev - 1,
-          );
-        }, 1000);
+        console.log("FOCUS");
+        // reset the time left
+        const passedSeconds = Math.floor((Date.now() - startMs.current) / 1000);
+        const remaining = Math.max(0, initialSeconds - passedSeconds);
+        setSecondsLeft(remaining);
+
+        // restart Interval
+        runCountdownInterval();
       }
     };
 
     window.addEventListener("focus", handleFocus);
 
     return () => window.removeEventListener("focus", handleFocus);
-  }, [secondsLeft, status]);
+  }, [status, initialSeconds]);
 
   // 计时结束
   useEffect(() => {
@@ -66,25 +72,15 @@ export const useCountdown = ({
     startMs.current = Date.now();
     endingMs.current = startMs.current + secondsLeft * 1000;
 
-    intervalId.current = window.setInterval(() => {
-      // check if now is equal to ending clock, if it is, set total seconds to 0
-      setSecondsLeft((prev) => {
-        // console.log(
-        //   endingMs.current,
-        //   Date.now(),
-        //   prev,
-        //   Date.now() >= endingMs.current,
-        //   Date.now() >= endingMs.current ? 0 : prev - 1
-        // ); // FIX: 为什么这里会 log 两次？
-        return Date.now() >= endingMs.current ? 0 : prev - 1;
-      });
-    }, 1000);
+    runCountdownInterval();
   };
 
   // 计时运行期间or计时结束后，重置计时器
   const reset = () => {
     if (status === "running" || status === "end") {
       clearInterval(intervalId.current);
+      startMs.current = 0;
+      endingMs.current = 0;
       setSecondsLeft(initialSeconds);
       setStatus("initial");
     }
