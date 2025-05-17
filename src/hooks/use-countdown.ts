@@ -92,5 +92,6 @@ export const useCountdown = ({
     secondsLeft,
     isRunning,
     isEnd,
+    endingMs: endingMs.current,
   };
 };

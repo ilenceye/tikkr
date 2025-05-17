@@ -10,8 +10,15 @@ import { PlayIcon, RotateCcwIcon } from "lucide-react";
 export default function App() {
   const [initialSeconds, setInitialSeconds] = useState(0);
 
-  const { isRunning, isEnd, secondsLeft, start, reset } = useCountdown({
-    initialSeconds,
+  const { isRunning, isEnd, secondsLeft, endingMs, start, reset } =
+    useCountdown({
+      initialSeconds,
+    });
+
+  const endingClock = new Date(endingMs).toLocaleTimeString("zh-CN", {
+    hour12: false,
+    hour: "2-digit",
+    minute: "2-digit",
   });
 
   return (
@@ -22,8 +29,13 @@ export default function App() {
             <TimerList onSecondsChange={setInitialSeconds} />
           </div>
         ) : (
-          <div className="flex grow items-center">
-            <Countdown seconds={secondsLeft} />
+          <div className="grid grow place-items-center text-center">
+            <div>
+              <Countdown seconds={secondsLeft} />
+              <div className="text-muted-foreground text-sm">
+                倒计时将在 {endingClock} 结束
+              </div>
+            </div>
           </div>
         )}
         <div className="mt-auto">
