@@ -5,14 +5,30 @@ import { Layout } from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import { TimerList } from "@/features/timers";
 import { useCountdown } from "@/hooks/use-countdown";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 import { PlayIcon, RotateCcwIcon } from "lucide-react";
 
 export default function App() {
   const [initialSeconds, setInitialSeconds] = useState(0);
 
+  const handleCountdownFinish = async () => {
+    const win = getCurrentWindow();
+    const [isVisible, isFocused] = await Promise.all([
+      win.isVisible(),
+      win.isFocused(),
+    ]);
+
+    if (!isVisible) {
+      await win.show();
+    } else if (!isFocused) {
+      await win.setFocus();
+    }
+  };
+
   const { isRunning, isEnd, secondsLeft, endingMs, start, reset } =
     useCountdown({
       initialSeconds,
+      onFinish: handleCountdownFinish,
     });
 
   const endingClock = new Date(endingMs).toLocaleTimeString("zh-CN", {
