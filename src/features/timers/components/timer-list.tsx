@@ -1,8 +1,6 @@
 import { useEffect } from "react";
-import { Fragment } from "react/jsx-runtime";
 
 import { TimerControls } from "@/features/timers/components/timer-controls";
-import { useTimerDialog } from "@/features/timers/components/timer-dialog";
 import { TimerItem } from "@/features/timers/components/timer-item";
 import { TimerListControls } from "@/features/timers/components/timer-list-controls";
 import { useTimers } from "@/features/timers/hooks/use-timers";
@@ -25,8 +23,6 @@ export function TimerList({
     onSecondsChange(activeSeconds);
   }, [activeTimerIdx, timers]);
 
-  const { TimerDialog, openTimerDialog } = useTimerDialog();
-
   const handleTimerAdd = (seconds: number) => {
     addTimer(seconds);
     setActiveTimerIdx(timers.length);
@@ -45,23 +41,18 @@ export function TimerList({
       <TimerListControls onTimerAdd={handleTimerAdd} />
       <div className="grid grid-cols-3 gap-2">
         {timers.map((timer, idx) => (
-          <Fragment key={timer.id}>
-            <TimerDialog
-              variant="edit"
-              defaultSeconds={timer.seconds}
-              onSubmit={(seconds) => updateTimer({ ...timer, seconds })}
+          <TimerControls
+            key={timer.id}
+            timer={timer}
+            onDelete={() => handleTimerDelete(timer.id, idx)}
+            onEdit={updateTimer}
+          >
+            <TimerItem
+              timer={timer}
+              isActive={idx === activeTimerIdx}
+              onClick={() => idx !== activeTimerIdx && setActiveTimerIdx(idx)}
             />
-            <TimerControls
-              onDelete={() => handleTimerDelete(timer.id, idx)}
-              onEdit={openTimerDialog}
-            >
-              <TimerItem
-                timer={timer}
-                isActive={idx === activeTimerIdx}
-                onClick={() => idx !== activeTimerIdx && setActiveTimerIdx(idx)}
-              />
-            </TimerControls>
-          </Fragment>
+          </TimerControls>
         ))}
       </div>
     </>
