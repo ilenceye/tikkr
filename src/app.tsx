@@ -37,6 +37,13 @@ export default function App() {
     minute: "2-digit",
   });
 
+  const handleCountdownStart = () => {
+    start();
+    setTimeout(() => {
+      getCurrentWindow().hide();
+    }, 1500);
+  };
+
   return (
     <Layout>
       <div className="flex h-full flex-col p-6">
@@ -56,7 +63,10 @@ export default function App() {
         )}
         <div className="mt-auto">
           {!isRunning && !isEnd ? (
-            <Button className="w-full cursor-pointer" onClick={start}>
+            <Button
+              className="w-full cursor-pointer"
+              onClick={handleCountdownStart}
+            >
               <PlayIcon className="mr-2 h-4 w-4" /> 开始
             </Button>
           ) : (
