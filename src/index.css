@@ -86,3 +86,17 @@
     @apply bg-background text-foreground;
   }
 }
+
+@theme {
+  --animate-flash: flash 0.8s ease-in-out 3;
+
+  @keyframes flash {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+}

@@ -56,7 +56,9 @@ export default function App() {
             <div>
               <Countdown seconds={secondsLeft} />
               <div className="text-muted-foreground text-sm">
-                倒计时将在 {endingClock} 结束
+                {isCompleted
+                  ? "倒计时已结束"
+                  : `倒计时将在 ${endingClock} 结束`}
               </div>
             </div>
           </div>

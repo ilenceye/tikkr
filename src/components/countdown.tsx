@@ -1,6 +1,9 @@
+import { cn } from "@/lib/classnames";
 import { transformer } from "@/lib/time";
 
 export function Countdown({ seconds }: { seconds: number }) {
+  const isCompleted = seconds === 0;
+
   // 转换
   const [hh, mm, ss] = transformer(seconds);
 
@@ -10,7 +13,12 @@ export function Countdown({ seconds }: { seconds: number }) {
   const formattedSecond = `0${ss}`.slice(-2);
 
   return (
-    <div className="rounded-xl px-8 py-4 text-center font-mono text-7xl font-semibold tracking-tight">
+    <div
+      className={cn(
+        "rounded-xl px-8 py-4 text-center font-mono text-7xl font-semibold tracking-tight",
+        isCompleted && "animate-flash",
+      )}
+    >
       {formattedHour}:{formattedMinute}:{formattedSecond}
     </div>
   );
