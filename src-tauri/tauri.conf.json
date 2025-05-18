@@ -33,6 +33,6 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ],
-    "resources": ["icons/icon.png"]
+    "resources": ["icons/24x24.png"]
   }
 }

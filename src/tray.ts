@@ -1,6 +1,5 @@
 import { Menu } from "@tauri-apps/api/menu";
 import { TrayIcon, TrayIconOptions } from "@tauri-apps/api/tray";
-
 import { getCurrentWindow } from "@tauri-apps/api/window";
 
 async function toggleWindow() {
@@ -36,7 +35,7 @@ export async function createTray() {
 
   const options: TrayIconOptions = {
     tooltip: "Tikkr",
-    icon: "icons/icon.png",
+    icon: "icons/24x24.png",
     menu,
     showMenuOnLeftClick: false,
     action: async (event) => {
