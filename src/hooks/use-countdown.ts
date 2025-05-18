@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-type TimerStatus = "initial" | "running" | "end";
+type TimerStatus = "initial" | "running" | "completed";
 
 export const useCountdown = ({
   initialSeconds,
@@ -13,7 +13,7 @@ export const useCountdown = ({
 
   const [status, setStatus] = useState<TimerStatus>("initial");
   const isRunning = status === "running";
-  const isEnd = status === "end";
+  const isCompleted = status === "completed";
 
   const intervalId = useRef<number>();
   const startMs = useRef<number>(0);
@@ -56,7 +56,7 @@ export const useCountdown = ({
     if (intervalId.current) {
       if (secondsLeft === 0) {
         clearInterval(intervalId.current);
-        setStatus("end");
+        setStatus("completed");
 
         //
         onFinish?.();
@@ -77,7 +77,7 @@ export const useCountdown = ({
 
   // 计时运行期间or计时结束后，重置计时器
   const reset = () => {
-    if (status === "running" || status === "end") {
+    if (status === "running" || status === "completed") {
       clearInterval(intervalId.current);
       startMs.current = 0;
       endingMs.current = 0;
@@ -91,7 +91,7 @@ export const useCountdown = ({
     reset,
     secondsLeft,
     isRunning,
-    isEnd,
+    isCompleted,
     endingMs: endingMs.current,
   };
 };

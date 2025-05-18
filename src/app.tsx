@@ -25,7 +25,7 @@ export default function App() {
     }
   };
 
-  const { isRunning, isEnd, secondsLeft, endingMs, start, reset } =
+  const { isRunning, isCompleted, secondsLeft, endingMs, start, reset } =
     useCountdown({
       initialSeconds,
       onFinish: handleCountdownFinish,
@@ -47,7 +47,7 @@ export default function App() {
   return (
     <Layout>
       <div className="flex h-full flex-col p-6">
-        {!isRunning && !isEnd ? (
+        {!isRunning && !isCompleted ? (
           <div className="w-full">
             <TimerList onSecondsChange={setInitialSeconds} />
           </div>
@@ -62,7 +62,7 @@ export default function App() {
           </div>
         )}
         <div className="mt-auto">
-          {!isRunning && !isEnd ? (
+          {!isRunning && !isCompleted ? (
             <Button
               className="w-full cursor-pointer"
               onClick={handleCountdownStart}
