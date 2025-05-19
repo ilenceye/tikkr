@@ -3,14 +3,15 @@ import { TrayIcon, TrayIconOptions } from "@tauri-apps/api/tray";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 
 async function toggleWindow() {
-  const appWindow = getCurrentWindow();
-  const isVisible = await appWindow.isVisible();
+  const win = getCurrentWindow();
+  const isVisible = await win.isVisible();
 
   if (isVisible) {
-    await appWindow.hide();
+    await win.hide();
   } else {
-    await appWindow.show();
-    await appWindow.setFocus(); // Bring the window to front and focus.
+    await win.show();
+    await win.setFocus();
+    await win.setAlwaysOnTop(true);
   }
 }
 
