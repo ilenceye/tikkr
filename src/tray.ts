@@ -11,7 +11,6 @@ async function toggleWindow() {
   } else {
     await win.show();
     await win.setFocus();
-    await win.setAlwaysOnTop(true);
   }
 }
 
