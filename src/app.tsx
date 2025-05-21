@@ -1,12 +1,11 @@
 import { useState } from "react";
 
 import { Countdown } from "@/components/countdown";
+import { CountdownActions } from "@/components/countdown-actions";
 import { Layout } from "@/components/layout";
-import { Button } from "@/components/ui/button";
 import { TimerList } from "@/features/timers";
 import { useCountdown } from "@/hooks/use-countdown";
 import { getCurrentWindow } from "@tauri-apps/api/window";
-import { CheckIcon, PlayIcon, RotateCcwIcon } from "lucide-react";
 
 export default function App() {
   const [initialSeconds, setInitialSeconds] = useState(0);
@@ -25,7 +24,7 @@ export default function App() {
     }
   };
 
-  const { isIdle, isCompleted, secondsLeft, endingMs, start, reset } =
+  const { isIdle, isCompleted, secondsLeft, status, endingMs, start, reset } =
     useCountdown({
       initialSeconds,
       onFinish: handleCountdownFinish,
@@ -64,30 +63,11 @@ export default function App() {
           </div>
         )}
         <div className="mt-auto">
-          {isIdle ? (
-            <Button
-              className="w-full cursor-pointer"
-              onClick={handleCountdownStart}
-            >
-              <PlayIcon className="mr-2 h-4 w-4" /> 开始
-            </Button>
-          ) : (
-            <Button
-              variant="outline"
-              className="w-full cursor-pointer"
-              onClick={reset}
-            >
-              {isCompleted ? (
-                <>
-                  <CheckIcon className="mr-2 h-4 w-4" /> 知道了
-                </>
-              ) : (
-                <>
-                  <RotateCcwIcon className="mr-2 h-4 w-4" /> 重置
-                </>
-              )}
-            </Button>
-          )}
+          <CountdownActions
+            status={status}
+            onStart={handleCountdownStart}
+            onReset={reset}
+          />
         </div>
       </div>
     </Layout>

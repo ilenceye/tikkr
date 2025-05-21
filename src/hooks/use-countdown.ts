@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-type TimerStatus = "idle" | "running" | "completed";
+export type CountdownStatus = "idle" | "running" | "completed";
 
 export const useCountdown = ({
   initialSeconds,
@@ -11,7 +11,7 @@ export const useCountdown = ({
 }) => {
   const [secondsLeft, setSecondsLeft] = useState(initialSeconds);
 
-  const [status, setStatus] = useState<TimerStatus>("idle");
+  const [status, setStatus] = useState<CountdownStatus>("idle");
   const isIdle = status === "idle";
   const isRunning = status === "running";
   const isCompleted = status === "completed";
@@ -91,6 +91,7 @@ export const useCountdown = ({
     start,
     reset,
     secondsLeft,
+    status,
     isIdle,
     isRunning,
     isCompleted,
